@@ -58,3 +58,8 @@ adding `-extension -Xinherit` as arguments to your XJC script.
 
 For convenience, a simple shell script is available in the root of this project
 that shows one way of running XJC with the jaxb-inherit plugin enabled.
+
+## References and links
+
+1. JAXB reference implementation: <http://jaxb.java.net/>;
+2. JAXB2-commons library: <https://jaxb2-commons.java.net>.
