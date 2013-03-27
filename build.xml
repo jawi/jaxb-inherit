@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="jaxb-inherit">
+	<property environment="env" />
+
+	<property name="artifactname" value="jaxb-inherit-1.0.0.jar" />
+
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.5" />
+	<property name="source" value="1.5" />
+
+	<path id="jaxb-inherit.classpath">
+		<pathelement location="bin" />
+		<pathelement location="lib/jaxb-xjc.jar" />
+	</path>
+
+	<target name="init">
+		<mkdir dir="bin" />
+		<mkdir dir="generated" />
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.launch" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="bin_test" />
+		<delete dir="generated" />
+	</target>
+
+	<target name="build" depends="init">
+		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="jaxb-inherit.classpath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="init">
+		<jar destfile="generated/${artifactname}">
+			<fileset dir="bin" />
+			<manifest>
+				<attribute name="Bundle-ManifestVersion" value="2" />
+				<attribute name="Bundle-Name" value="jaxb-inherit" />
+				<attribute name="Bundle-SymbolicName" value="jaxb-inherit" />
+				<attribute name="Import-Package" value="com.sun.codemodel,com.sun.tools.xjc,com.sun.tools.xjc.model,com.sun.tools.xjc.outline,org.w3c.dom,org.xml.sax" />
+			</manifest>
+			<service type="com.sun.tools.xjc.Plugin">
+				<provider classname="nl.lxtreme.jaxb.addon.inherit.InheritPlugin" />
+			</service>
+		</jar>
+	</target>
+</project>
